@@ -1,0 +1,83 @@
+
+<div class="borderdiv">
+    <div class="alert-primary header">
+            <h1>Phone Book</h1>
+    </div><br>
+    <div class="row container justify-content-center">
+        <form>
+            <div class="input-group mb-3 input-group-sm">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Search</span>
+                </div>
+            <input #searchKey type="text" class="form-control" style="width: 300px;" (keyup)="searchByName(searchKey.value)">
+            </div>
+        </form>
+ 
+    <table class="table table-striped">
+        <thead>
+        <tr>
+          <th scope="col"></th>
+          <th scope="col">Name</th>
+          <th scope="col">Phone Number</th>
+          <th scope="col">Actions</th>
+        </tr>
+        </thead>
+  
+        <tbody>
+        <tr *ngFor="let contact of contacts; index as i">
+          <th scope="row">{{ contact.id }}</th>
+          <td>
+            {{ contact.name }}
+          </td>
+          <td>{{ contact.phonenumber}}</td>
+          <td>
+            <div class="btn-group btn-group-sm">
+                <button type="button" class="btn btn-danger" (click)="openDeleteContact(contact)">Delete</button>
+                <button type="button" class="btn btn-info" (click)="openupdateContact(contact)">Edit</button>
+                <button type="button" class="btn btn-secondary" *ngIf="contacts.length == i+1" (click)="isadd()">Add</button>
+              </div>
+          </td>
+        </tr>
+        <tr *ngIf="isAdd || contacts.length == 0">
+            <th scope="row"></th>
+            <td>
+              <form #f1="ngForm">
+                <div class="input-group input-group-sm">
+                  <input name="name" #name="ngModel" ngModel type="text" class="form-control" style="width: 60px;text-align: center;" required minlength="3" placeholder="Contact Name">
+                  <small class="form-text text-muted" *ngIf="name.touched && (name.errors?.required || name.errors?.minlength)">
+                    <div *ngIf="name.errors?.required"> Please enter the name.</div>
+                    <div *ngIf="name.errors?.minlength"> Must be at least {{name.errors?.minlength.requiredLength}} chars, not {{name.errors?.minlength.actualLength}} chars.
+                    </div>
+                  </small>
+                </div>
+              </form>
+            </td>
+            <td>
+              <form #f2="ngForm">
+                <div class="input-group input-group-sm">
+                <input name="phonenumber" #phonenumber="ngModel" ngModel type="tel" class="form-control" style="width: 60px;text-align: center;" required
+                 pattern="0+[0-9]*" minlength="10" maxlength="11" placeholder="Contact Phone number" (keyup)="validatephone(phonenumber.value)">
+                <small class="form-text text-muted"
+                 *ngIf="phonenumber.touched && (phonenumber.errors?.required || phonenumber.errors?.pattern  || phonenumber.errors?.minlength 
+                  || phonenumber.errors?.maxlength || ifPhoneExist)">
+                  <div *ngIf="phonenumber.errors?.required"> Please enter the phone number.</div>
+                  <div *ngIf="(phonenumber.errors?.pattern  || phonenumber.errors?.minlength  || phonenumber.errors?.maxlength)"> Not pattern of phone number (10-11 num)</div>
+                  <div *ngIf="ifPhoneExist"> This phoneNumber is added before with {{ifPhoneExistName}}</div>
+                </small>
+                </div>
+              </form>
+            </td>
+            <td>
+              <form #f3="ngForm" (ngSubmit)="addContact(name.value,phonenumber.value)">
+                <button type="submit" class="btn btn-light" [disabled]="f1.invalid || f2.invalid || ifPhoneExistName">Add</button>
+              </form>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-between p-2">
+        <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize">
+        </ngb-pagination>
+      </div>
+    </div>
+</div>

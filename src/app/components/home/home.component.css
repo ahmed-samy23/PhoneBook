@@ -1,0 +1,18 @@
+.borderdiv{
+    border: 1px solid turquoise !important;
+    border-radius: 16px;
+    margin-top: 30px;
+}
+.header{
+    border: 1px solid turquoise !important;
+    border-radius: 16px;
+    height: 100px;
+}
+h1{
+    text-align: center;
+    padding-top: 25px
+}
+table{
+    width: 90%;
+    text-align: center;
+}

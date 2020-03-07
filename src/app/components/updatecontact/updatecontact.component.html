@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>Edit Contact</h1>
+<div mat-dialog-content>
+    <form #f="ngForm">
+        <div class="form-group">
+          <label>Name: </label>
+          <div class="input-group mb-2">
+          <input #name="ngModel" name="name" ngModel [(ngModel)]="contactEdit.name" type="text" class="form-control" required minlength="3">
+          </div>
+          <small class="form-text text-muted" *ngIf="name.touched && (name.errors?.required || name.errors?.minlength)">
+            <div *ngIf="name.errors?.required"> Please enter the name.</div>
+            <div *ngIf="name.errors?.minlength"> Must be at least {{name.errors?.minlength.requiredLength}} chars, not {{name.errors?.minlength.actualLength}} chars.
+            </div>
+          </small>
+        </div>
+        <div class="form-group">
+          <label>Phone Number: </label>
+          <div class="input-group mb-2">
+          <input #phonenumber="ngModel" name="phonenumber" ngModel [(ngModel)]="contactEdit.phonenumber" type="tel" class="form-control" required
+          pattern="0+[0-9]*" minlength="10" maxlength="11" (keyup)="validatephone(phonenumber.value)">
+          </div>
+          <small class="form-text text-muted"
+                 *ngIf="phonenumber.touched && (phonenumber.errors?.required || phonenumber.errors?.pattern  || phonenumber.errors?.minlength
+                  || phonenumber.errors?.maxlength || ifPhoneExist)">
+                  <div *ngIf="phonenumber.errors?.required"> Please enter the phone number.</div>
+                  <div *ngIf="(phonenumber.errors?.pattern  || phonenumber.errors?.minlength  || phonenumber.errors?.maxlength)"> Not pattern of phone number (10-11 num)</div>
+                  <div *ngIf="ifPhoneExist"> This phoneNumber is added before with {{ifPhoneExistName}}</div>                
+                </small>
+        </div>
+    </form>
+</div>
+<div class="text-center btn-group btn-group-sm" mat-dialog-actions>
+  <button type="submit" class="btn btn-outline-info btn-lg" [disabled]="f.invalid || ifPhoneExistName" (click)="updateContact()">Save</button>
+  <button type="button" class="btn btn-outline-danger btn-lg" (click)="onNoClick()">Cansel</button>
+</div>

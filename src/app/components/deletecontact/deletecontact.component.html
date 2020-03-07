@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>Delete Contact</h1>
+<div mat-dialog-content>
+  <p>Are you sure to delete {{data.valueOf()['mydata'].name}} ?</p>
+</div>
+<div class="text-center btn-group btn-group-sm" mat-dialog-actions>
+  <button type="button" class="btn btn-outline-danger btn-lg" (click)="Deletecontact()">Delete</button>
+  <button type="button" class="btn btn-outline-info btn-lg" (click)="onNoClick()">Cansel</button>
+</div>
