@@ -3,8 +3,7 @@ import { UpdatecontactComponent } from './../updatecontact/updatecontact.compone
 import { ContactsService } from './../../services/contacts.service';
 import { Contacts } from './../../interfaces/contacts';
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { DeletecontactComponent } from '../deletecontact/deletecontact.component';
 
 @Component({
